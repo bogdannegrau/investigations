@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Bet Support — Agent Escalation</title>
+<style>
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Rg.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); font-weight: 700; }
+  @font-face { font-family: SkyText-Medium; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: SkyText, sans-serif; font-size: 14px; line-height: 20px; color: #1a1a1a; background: #f4f4f4; display: flex; flex-direction: column; min-height: 100vh; }
+  strong { font-weight: 700; }
+
+  .topbar {
+    background: linear-gradient(180deg, rgba(12,20,69,1) 0%, rgba(12,20,69,0.97) 100%);
+    padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar a { color: #fff; text-decoration: none; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .topbar-title { color: #fff; font-size: 16px; font-weight: 400; }
+  .ai-header {
+    background: #fff; border-bottom: 1px solid #e0e0e0;
+    padding: 12px 24px; text-align: center;
+  }
+  .ai-header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #5b21b6, #7c3aed);
+    color: #fff; font-size: 14px; font-weight: 700;
+    padding: 6px 18px; border-radius: 4px;
+  }
+
+  .chat-area { max-width: 900px; width: 100%; margin: 0 auto; padding: 24px; flex: 1; }
+
+  .message { margin-bottom: 20px; display: flex; gap: 12px; }
+  .message.user { justify-content: flex-end; }
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; font-weight: 700;
+  }
+  .message.ai .msg-avatar { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff; }
+  .message.user .msg-avatar { background: #1a1a1a; color: #fff; }
+  .msg-content { max-width: 80%; }
+  .message.user .msg-bubble {
+    background: #1a1a1a; color: #fff; padding: 12px 18px; border-radius: 4px;
+    font-size: 16px; line-height: 24px;
+  }
+  .message.ai .msg-bubble {
+    background: #fff; color: #545454; padding: 18px 22px; border-radius: 4px;
+    font-size: 14px; line-height: 22px; box-shadow: 0 0 24px rgba(0,0,0,0.1);
+  }
+  .message.ai .msg-bubble p { margin-bottom: 10px; }
+  .message.ai .msg-bubble p:last-child { margin-bottom: 0; }
+  .message.ai .msg-bubble strong { color: #1a1a1a; }
+  .msg-meta { font-size: 11px; color: #8c8c8c; margin-top: 4px; padding: 0 4px; }
+  .message.user .msg-meta { text-align: right; }
+
+  .collapsed { text-align: center; padding: 12px; margin-bottom: 20px; }
+  .collapsed-btn {
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 4px;
+    padding: 8px 20px; font-size: 12px; color: #545454; cursor: pointer;
+    font-family: SkyText, sans-serif;
+  }
+
+  /* Escalation card */
+  .escalation-card {
+    background: #fff; border: 2px solid #e0e0e0; border-radius: 4px;
+    padding: 24px; margin: 24px 0; text-align: center;
+    box-shadow: 0 0 24px rgba(0,0,0,0.1);
+  }
+  .escalation-card .icon { font-size: 36px; margin-bottom: 12px; }
+  .escalation-card h3 { font-family: SkyText-Medium, sans-serif; font-size: 18px; color: #1a1a1a; margin-bottom: 8px; }
+  .escalation-card p { font-size: 14px; color: #545454; line-height: 22px; margin-bottom: 4px; }
+  .escalation-card .check { color: #006858; font-weight: 700; }
+  .context-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #cde7d9; border: 1px solid #a8d8b9; color: #006858;
+    font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 4px; margin-top: 12px;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 24px 0; color: #8c8c8c; font-size: 12px; font-weight: 700;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e0e0e0; }
+
+  /* LP window */
+  .lp-window {
+    background: #fff; border: 2px solid #e0e0e0; border-radius: 4px;
+    max-width: 380px; margin: 0 auto; box-shadow: 0 0 24px rgba(0,0,0,0.15); overflow: hidden;
+  }
+  .lp-header {
+    background: linear-gradient(135deg, #0c1445, #1a237e);
+    color: #fff; padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .lp-header h4 { font-size: 16px; font-weight: 700; }
+  .lp-header .close { cursor: pointer; font-size: 18px; opacity: 0.7; }
+  .lp-body { padding: 20px; }
+  .lp-system-msg {
+    background: #f4f4f4; border-radius: 4px; padding: 14px;
+    font-size: 13px; color: #545454; line-height: 20px; margin-bottom: 16px;
+  }
+  .lp-system-msg .label {
+    font-weight: 700; color: #0c1445; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block;
+  }
+  .lp-system-msg strong { color: #1a1a1a; }
+  .lp-agent-msg { display: flex; gap: 8px; align-items: flex-start; }
+  .lp-agent-avatar {
+    width: 28px; height: 28px; border-radius: 4px;
+    background: #0c1445; color: #fff; font-size: 11px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700;
+  }
+  .lp-agent-bubble {
+    background: #f4f4f4; border-radius: 4px; padding: 12px 16px;
+    font-size: 14px; color: #1a1a1a; line-height: 22px;
+  }
+  .lp-agent-bubble strong { color: #0c1445; }
+  .lp-input-bar { border-top: 1px solid #e0e0e0; padding: 12px 16px; display: flex; gap: 8px; }
+  .lp-input {
+    flex: 1; border: 1px solid #f4f4f4; background: #f4f4f4; border-radius: 4px;
+    padding: 10px 16px; font-size: 14px; font-family: SkyText, sans-serif; outline: none;
+  }
+  .lp-send {
+    background: #0c1445; color: #fff; border: none; border-radius: 4px;
+    width: 40px; height: 40px; font-size: 16px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#">‹ Back to Search</a>
+  <span class="topbar-title">Sky Bet Support</span>
+</div>
+<div class="ai-header"><div class="ai-header-badge">✨ AI Mode</div></div>
+
+<div class="chat-area">
+  <div class="collapsed"><button class="collapsed-btn">↑ Show earlier messages (2 turns)</button></div>
+
+  <div class="message user">
+    <div class="msg-content">
+      <div class="msg-bubble">I still think this is wrong. Can I talk to someone?</div>
+      <div class="msg-meta">9:18 PM</div>
+    </div>
+    <div class="msg-avatar">BN</div>
+  </div>
+
+  <div class="message ai">
+    <div class="msg-avatar">✨</div>
+    <div class="msg-content">
+      <div class="msg-bubble">
+        <p>Of course — I'll connect you with one of our support agents right away. They'll have the full context of our conversation so you won't need to repeat anything.</p>
+        <p>Here's what I'm passing along:</p>
+        <p>
+          ✅ Your query about bet <strong>#SB-29841773</strong><br>
+          ✅ The Rule 4 deduction explanation<br>
+          ✅ Your concern that the result may be incorrect
+        </p>
+      </div>
+      <div class="msg-meta">9:18 PM</div>
+    </div>
+  </div>
+
+  <div class="escalation-card">
+    <div class="icon">🧑‍💼</div>
+    <h3>Connecting you to an agent...</h3>
+    <p>A support agent will be with you shortly.</p>
+    <p class="check">✓ Conversation context transferred</p>
+    <div class="context-badge">🔗 AI summary + Bet #SB-29841773 details sent to agent</div>
+  </div>
+
+  <div class="divider">LivePerson Chat Window Opens</div>
+
+  <div class="lp-window">
+    <div class="lp-header">
+      <h4>Sky Bet Support</h4>
+      <span class="close">✕</span>
+    </div>
+    <div class="lp-body">
+      <div class="lp-system-msg">
+        <span class="label">📋 AI Concierge Context</span>
+        Customer queried bet <strong>#SB-29841773</strong> (3:40 Cheltenham, Lucky Star, 5/1). 
+        Rule 4 deduction of 20p/£ applied due to "Midnight Express" withdrawal. 
+        Customer believes result is incorrect. AI explained Rule 4 — customer not satisfied.
+      </div>
+      <div class="lp-agent-msg">
+        <div class="lp-agent-avatar">SB</div>
+        <div class="lp-agent-bubble">
+          Hi there! I'm Sarah from Sky Bet Support. I can see you've been chatting with our AI assistant about <strong>bet #SB-29841773</strong> and the Rule 4 deduction. Let me take a closer look at this for you. 🔍
+        </div>
+      </div>
+    </div>
+    <div class="lp-input-bar">
+      <input class="lp-input" type="text" placeholder="Type a message...">
+      <button class="lp-send">➤</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Bet Support — AI Mode Chat</title>
+<style>
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Rg.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); font-weight: 700; }
+  @font-face { font-family: SkyText-Medium; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: SkyText, sans-serif; font-size: 14px; line-height: 20px; color: #1a1a1a; background: #f4f4f4; display: flex; flex-direction: column; min-height: 100vh; }
+  strong { font-weight: 700; }
+
+  /* Top bar — matches Sky Bet nav */
+  .topbar {
+    background: linear-gradient(180deg, rgba(12,20,69,1) 0%, rgba(12,20,69,0.97) 100%);
+    padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar a { color: #fff; text-decoration: none; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .topbar-title { color: #fff; font-size: 16px; font-weight: 400; }
+
+  /* AI Mode header */
+  .ai-header {
+    background: #fff; border-bottom: 1px solid #e0e0e0;
+    padding: 12px 24px; text-align: center;
+  }
+  .ai-header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #5b21b6, #7c3aed);
+    color: #fff; font-size: 14px; font-weight: 700;
+    padding: 6px 18px; border-radius: 4px;
+  }
+  .ai-header-sub { font-size: 12px; color: #545454; margin-top: 4px; }
+
+  /* Chat area */
+  .chat-area { max-width: 900px; width: 100%; margin: 0 auto; padding: 24px; flex: 1; }
+
+  .message { margin-bottom: 20px; display: flex; gap: 12px; }
+  .message.user { justify-content: flex-end; }
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; font-weight: 700;
+  }
+  .message.ai .msg-avatar { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff; }
+  .message.user .msg-avatar { background: #1a1a1a; color: #fff; }
+  .msg-content { max-width: 80%; }
+  .message.user .msg-bubble {
+    background: #1a1a1a; color: #fff;
+    padding: 12px 18px; border-radius: 4px;
+    font-size: 16px; line-height: 24px;
+  }
+  .message.ai .msg-bubble {
+    background: #fff; color: #545454;
+    padding: 18px 22px; border-radius: 4px;
+    font-size: 14px; line-height: 22px;
+    box-shadow: 0 0 24px rgba(0,0,0,0.1);
+  }
+  .message.ai .msg-bubble p { margin-bottom: 10px; }
+  .message.ai .msg-bubble p:last-child { margin-bottom: 0; }
+  .message.ai .msg-bubble strong { color: #1a1a1a; }
+  .message.ai .msg-bubble ul { margin: 8px 0 12px; list-style: none; }
+  .message.ai .msg-bubble ul li { padding: 5px 0 5px 18px; position: relative; }
+  .message.ai .msg-bubble ul li::before {
+    content: ''; position: absolute; left: 0; top: 12px;
+    width: 6px; height: 6px; border-radius: 50%; background: #7c3aed;
+  }
+  .msg-sources { margin-top: 10px; font-size: 12px; color: #8c8c8c; }
+  .msg-sources a { color: #5b21b6; text-decoration: none; font-weight: 700; }
+  .msg-sources a:hover { text-decoration: underline; }
+  .msg-meta { font-size: 11px; color: #8c8c8c; margin-top: 4px; padding: 0 4px; }
+  .message.user .msg-meta { text-align: right; }
+
+  /* Bet card */
+  .bet-card {
+    background: #f9f9ff; border: 1px solid #e8e8f0; border-radius: 4px;
+    padding: 16px 18px; margin: 12px 0;
+  }
+  .bet-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; color: #545454; }
+  .bet-card-header .bet-id { font-weight: 700; color: #1a1a1a; }
+  .bet-card-status { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .bet-card-status.won { background: #cde7d9; color: #006858; }
+  .bet-card-main { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+  .bet-card-detail { font-size: 14px; color: #545454; line-height: 22px; }
+  .bet-card-detail .highlight { color: #c62828; font-weight: 700; }
+
+  /* Tool call indicator */
+  .tool-call {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #cde7d9; border: 1px solid #a8d8b9;
+    color: #006858; font-size: 12px; font-weight: 700;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 12px;
+  }
+  .tool-call .dot { width: 6px; height: 6px; border-radius: 50%; background: #009e51; }
+
+  /* Suggestions */
+  .suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .suggestion-chip {
+    background: #fff; border: 2px solid #1a1a1a; border-radius: 4px;
+    padding: 8px 16px; font-size: 14px; color: #1a1a1a; font-weight: 700;
+    cursor: pointer; font-family: SkyText, sans-serif;
+  }
+  .suggestion-chip:hover { background: #fafafa; }
+
+  /* Input bar */
+  .input-bar { background: #fff; border-top: 1px solid #e0e0e0; padding: 16px 24px; }
+  .input-container { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+  .input-field {
+    flex: 1; padding: 12px 16px; border: 1px solid #f4f4f4; background: #f4f4f4;
+    border-radius: 4px; font-size: 16px; font-family: SkyText, sans-serif;
+    outline: none; color: #1a1a1a;
+  }
+  .input-field::placeholder { color: #545454; }
+  .input-field:focus { border-color: #5b21b6; background: #fff; }
+  .send-btn {
+    width: 48px; height: 48px; border-radius: 4px;
+    background: #5b21b6; border: none; color: #fff; font-size: 20px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .send-btn:hover { background: #4c1d95; }
+
+  .escalation-bar { max-width: 900px; margin: 0 auto; text-align: center; padding: 8px 0 0; }
+  .escalation-btn {
+    background: none; border: 2px solid #e0e0e0; border-radius: 4px;
+    padding: 8px 20px; font-size: 14px; color: #545454; font-weight: 700;
+    font-family: SkyText, sans-serif; cursor: pointer;
+  }
+  .escalation-btn:hover { border-color: #1a1a1a; color: #1a1a1a; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#">‹ Back to Search</a>
+  <span class="topbar-title">Sky Bet Support</span>
+</div>
+<div class="ai-header">
+  <div class="ai-header-badge">✨ AI Mode</div>
+  <div class="ai-header-sub">Powered by AI · Answers based on Sky Bet support articles and your account</div>
+</div>
+
+<div class="chat-area">
+  <!-- Turn 1 -->
+  <div class="message user">
+    <div class="msg-content">
+      <div class="msg-bubble">What happened to my bets?</div>
+      <div class="msg-meta">9:14 PM</div>
+    </div>
+    <div class="msg-avatar">BN</div>
+  </div>
+  <div class="message ai">
+    <div class="msg-avatar">✨</div>
+    <div class="msg-content">
+      <div class="msg-bubble">
+        <p>There are several reasons your bet may not have paid out as expected:</p>
+        <ul>
+          <li><strong>Dead Heat</strong> — Two or more selections tied, winnings divided proportionally.</li>
+          <li><strong>Rule 4 Deduction</strong> — A late withdrawal in Horse Racing reduces your payout.</li>
+          <li><strong>Non-Runner / Void</strong> — A selection that didn't participate is voided.</li>
+          <li><strong>Each Way Terms</strong> — Place terms depend on runners under starter's orders.</li>
+        </ul>
+        <p>Would you like me to <strong>check your specific bets</strong>? I can look up your recent bets and explain exactly what happened.</p>
+        <div class="msg-sources">📎 <a href="#">Winnings not what you expected?</a> · <a href="#">Dead Heat</a> · <a href="#">Rule 4 Deductions</a> · <a href="#">Non Runners</a></div>
+      </div>
+      <div class="msg-meta">9:14 PM</div>
+    </div>
+  </div>
+
+  <!-- Turn 2 -->
+  <div class="message user">
+    <div class="msg-content">
+      <div class="msg-bubble">Yes, check my last bet please</div>
+      <div class="msg-meta">9:15 PM</div>
+    </div>
+    <div class="msg-avatar">BN</div>
+  </div>
+  <div class="message ai">
+    <div class="msg-avatar">✨</div>
+    <div class="msg-content">
+      <div class="tool-call"><span class="dot"></span> Looked up your recent bets</div>
+      <div class="msg-bubble">
+        <p>I found your most recent bet:</p>
+        <div class="bet-card">
+          <div class="bet-card-header"><span class="bet-id">Bet #SB-29841773</span><span class="bet-card-status won">✓ Won</span></div>
+          <div class="bet-card-main">🏇 3:40 Cheltenham — Lucky Star</div>
+          <div class="bet-card-detail">
+            Odds: 5/1 → Paid: <strong>£4.23</strong> <span style="color:#8c8c8c">(expected £6.00)</span><br><br>
+            <span class="highlight">⚠️ Rule 4 Deduction Applied: 20p in the £</span><br>
+            Reason: "Midnight Express" was a late withdrawal
+          </div>
+        </div>
+        <p>A <strong>Rule 4 deduction of 20p in the £</strong> was applied because "Midnight Express" (priced at 3/1) withdrew after you placed your bet. This reduced your payout from £6.00 to £4.23.</p>
+        <div class="msg-sources">📎 <a href="#">Rule 4 Deductions — Full explanation</a></div>
+      </div>
+      <div class="msg-meta">9:15 PM</div>
+    </div>
+  </div>
+
+  <div class="suggestions">
+    <button class="suggestion-chip">How is Rule 4 calculated?</button>
+    <button class="suggestion-chip">Check another bet</button>
+    <button class="suggestion-chip">What is a dead heat?</button>
+    <button class="suggestion-chip">I think this is wrong</button>
+  </div>
+</div>
+
+<div class="input-bar">
+  <div class="input-container">
+    <input class="input-field" type="text" placeholder="Ask a follow-up question...">
+    <button class="send-btn">➤</button>
+  </div>
+  <div class="escalation-bar">
+    <button class="escalation-btn">🧑‍💼 Need a human? Talk to an agent</button>
+  </div>
+</div>
+</body>
+</html>

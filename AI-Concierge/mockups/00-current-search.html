@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Bet Support — AI Summary</title>
+<style>
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Rg.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: SkyText; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); font-weight: 700; }
+  @font-face { font-family: SkyText-Medium; src: url('https://support.skybet.com/assets/fonts/SkyText_Md.ttf') format('truetype'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: SkyText, sans-serif; font-size: 14px; line-height: 20px; color: #1a1a1a; background: #fff; }
+  h1 { font-family: SkyText-Medium, sans-serif; font-size: 32px; line-height: 40px; font-weight: 400; }
+  h2 { font-family: SkyText, sans-serif; font-size: 24px; font-weight: 700; line-height: 32px; }
+  strong { font-weight: 700; }
+
+  .hlp-hero {
+    background-image: url('https://images.prismic.io/support-skybettingandgaming/Z--6f3dAxsiBwU2g_Cactus-header_Football_2800x1000.jpg?auto=format,compress');
+    background-position: center center; background-repeat: no-repeat; background-size: cover;
+    padding: 31px 0; position: relative;
+  }
+  .hlp-topnav nav {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 900px; margin: 0 auto; padding: 0 24px;
+  }
+  .hlp-topnav nav a {
+    color: #fff; text-decoration: none; font-size: 16px; line-height: 24px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hlp-topnav nav a span { font-weight: 700; }
+  .column-container { width: 900px; margin: 0 auto; }
+  .hero-content { margin: 140px 0 0; max-width: 500px; padding: 0 24px; }
+  .hero-content h1 { color: #fff; }
+  .hero-footer { margin: 16px 0 0; padding: 0 24px; }
+  .search-input { position: relative; width: 500px; }
+  .search-input input {
+    font-family: SkyText, sans-serif; font-size: 16px; line-height: 24px; height: 48px;
+    border: 1px solid #f4f4f4; background: #f4f4f4; color: #1a1a1a;
+    border-radius: 4px; width: 100%; padding: 12px 36px 12px 48px; outline: none;
+  }
+  .search-input .search-icon {
+    position: absolute; top: 4px; left: 0; width: 40px; height: 40px;
+    background: transparent url('https://support.skybet.com/assets/img/icons/search-icon.svg') no-repeat center center;
+  }
+  .autocomplete-results {
+    position: absolute; width: 100%; list-style: none;
+    margin-top: -4px; background: #f4f4f4;
+    border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+    max-height: 600px; overflow-y: auto; padding: 12px; z-index: 100;
+  }
+  .autocomplete-results__container {
+    border-radius: 4px; display: flex; flex-direction: column;
+    justify-content: center; padding: 8px 12px; min-height: 56px;
+    margin-bottom: 4px; transition: background-color 0.1s linear; cursor: pointer;
+  }
+  .autocomplete-results__container:hover { background: #e0e0e0; }
+  .autocomplete-results__link { text-decoration: none; color: #545454; }
+  .autocomplete-results__title { font-weight: 700; font-size: 16px; line-height: 20px; color: #1a1a1a; }
+  .autocomplete-results__summary { font-size: 12px; color: #545454; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  #main { width: 100%; padding: 48px 12px 64px; display: flex; justify-content: center; }
+  .main-container { max-width: 900px; width: 100%; }
+  .main-container > section:not(:last-child) { margin-bottom: 48px; }
+
+  /* === AI Summary Card === */
+  .ai-summary {
+    background: #f9f9ff; border: 1px solid #e8e8f0; border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 32px; position: relative;
+  }
+  .ai-summary::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #5b21b6, #7c3aed, #a78bfa);
+    border-radius: 8px 8px 0 0;
+  }
+  .ai-summary-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .ai-summary-header .label { font-family: SkyText-Medium, sans-serif; font-size: 14px; color: #5b21b6; }
+  .ai-badge {
+    background: #ede9fe; color: #5b21b6; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .ai-summary-body { font-size: 14px; line-height: 22px; color: #545454; }
+  .ai-summary-body p { margin-bottom: 10px; }
+  .ai-summary-body ul { margin: 8px 0 14px; list-style: none; }
+  .ai-summary-body ul li { padding: 5px 0 5px 18px; position: relative; }
+  .ai-summary-body ul li::before {
+    content: ''; position: absolute; left: 0; top: 12px;
+    width: 6px; height: 6px; border-radius: 50%; background: #7c3aed;
+  }
+  .ai-summary-body strong { color: #1a1a1a; }
+  .ai-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e8e8f0; font-size: 12px; color: #8c8c8c; }
+  .ai-sources a { color: #5b21b6; text-decoration: none; font-weight: 700; }
+  .ai-sources a:hover { text-decoration: underline; }
+  .ai-mode-cta {
+    display: flex; align-items: center; margin-top: 14px;
+    padding: 10px 14px; background: #fff; border: 1px solid #e8e8f0; border-radius: 4px;
+  }
+  .ai-mode-cta .ai-icon { font-size: 16px; margin-right: 10px; }
+  .ai-mode-cta input {
+    flex: 1; border: none; outline: none; font-family: SkyText, sans-serif;
+    font-size: 14px; color: #8c8c8c; background: transparent;
+  }
+  .ai-mode-btn {
+    background: #5b21b6; color: #fff; border: none; border-radius: 4px;
+    padding: 8px 16px; font-size: 14px; font-weight: 700;
+    font-family: SkyText, sans-serif; cursor: pointer;
+  }
+  .ai-mode-btn:hover { background: #4c1d95; }
+
+  .topQueries h2 { margin-bottom: 16px; }
+  .topQueriesList { list-style: none; }
+  .topQueriesList-item {
+    background: #fff; box-shadow: 0 0 24px rgba(0,0,0,0.1);
+    border-radius: 4px; margin-bottom: 8px; padding: 16px 20px; cursor: pointer;
+  }
+  .topQueriesList-item:hover { box-shadow: 0 0 24px rgba(0,0,0,0.2); }
+  .topQueriesList-item a {
+    color: #1a1a1a; text-decoration: none; font-size: 16px; font-weight: 700;
+    line-height: 24px; display: flex; align-items: center;
+  }
+  .topQueriesList-item a::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: #1a1a1a; margin-right: 12px; flex-shrink: 0;
+  }
+
+  .category-title { margin-bottom: 16px; }
+  .category-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .category-list-item .category {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 24px 16px; background: #fff; border: 1px solid #fff;
+    box-shadow: 0 0 24px rgba(0,0,0,0.1); border-radius: 4px;
+    text-decoration: none; color: #1a1a1a; min-height: 120px;
+  }
+  .category-list-item .category:hover { background: #fcfcfd; box-shadow: 0 0 24px rgba(0,0,0,0.2); }
+  .category-image-container { width: 48px; height: 48px; margin-bottom: 12px; }
+  .category-image { width: 48px; height: 48px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+  .category span { font-size: 16px; line-height: 24px; font-weight: 700; }
+  .cat-deposit { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttQkMTzAJOCoeM_Deposit_and_Withdraw.svg'); }
+  .cat-promos { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttRkMTzAJOCoeQ_Promotions_and_Rewards.svg'); }
+  .cat-safer { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttR0MTzAJOCoeR_Safer_Gambling.svg'); }
+  .cat-account { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZzXc4a8jQArT03gg_account-cat.svg'); }
+  .cat-football { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/aJMtyqTt2nPbZ5Zx_SOSIcon25-26.svg'); }
+  .cat-betting { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Zz8N3a8jQArT1HD6_BettingDesktop.svg'); }
+  .cat-aboutus { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Zz8QUK8jQArT1HFb_AboutUsDesktop.svg'); }
+  .cat-rules { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZzXdra8jQArT03hN_Rules-cat-best.svg'); }
+  .cat-virtual { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Z_TWSXdAxsiBwba6_VirtualIcon.svg'); }
+
+  .message-us { text-align: center; }
+  .message-us h2 { margin-bottom: 8px; }
+  .message-us-container {
+    display: flex; flex-direction: column; align-items: center;
+    background: #fff; box-shadow: 0 0 24px rgba(0,0,0,0.1);
+    border-radius: 4px; padding: 32px 24px;
+  }
+  .message-us-icon {
+    width: 48px; height: 48px; margin-bottom: 12px;
+    background: transparent url('https://support.skybet.com/assets/img/icons/message-us.svg') no-repeat center center;
+    background-size: contain;
+  }
+  .message-us-text { color: #1a1a1a; margin-bottom: 20px; font-size: 16px; }
+  .secondary {
+    text-align: center; cursor: pointer; border-radius: 4px;
+    width: 284px; min-height: 48px; font-family: SkyText, sans-serif;
+    font-weight: 700; font-size: 16px; line-height: 24px; padding: 12px 8px;
+    background: #fff; border: 2px solid #1a1a1a; color: #1a1a1a;
+  }
+  .secondary:hover { background: #fafafa; }
+  .back-to-top-container { display: flex; justify-content: center; padding: 24px 0; }
+  .back-to-top {
+    background: #fff; border: 2px solid #f2f2f7; border-radius: 50%;
+    width: 48px; height: 48px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; color: #1a1a1a;
+  }
+  .typing-cursor {
+    display: inline-block; width: 2px; height: 14px; background: #5b21b6;
+    margin-left: 2px; animation: blink 1s infinite; vertical-align: text-bottom;
+  }
+  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+</style>
+</head>
+<body>
+<section class="hlp-hero">
+  <div class="hlp-topnav"><nav><a href="#"><span>‹</span> <span>Back to Sky Bet</span></a></nav></div>
+  <div class="column-container">
+    <div class="hero-content"><h1>How can we help?</h1></div>
+    <div class="hero-footer">
+      <div class="search-input">
+        <input type="text" value="what happened to my bets" readonly>
+        <div class="search-icon"></div>
+        <ul class="autocomplete-results">
+          <li class="autocomplete-results__container"><a class="autocomplete-results__link" href="#"><span class="autocomplete-results__title">Winnings not what you expected?</span><span class="autocomplete-results__summary">This article explains some of the reasons that you may not have won as much as you were expecting from your bet...</span></a></li>
+          <li class="autocomplete-results__container"><a class="autocomplete-results__link" href="#"><span class="autocomplete-results__title">Cash Out</span><span class="autocomplete-results__summary">Cash Out allows you to lock in a profit or loss before waiting for the event to finish.</span></a></li>
+          <li class="autocomplete-results__container"><a class="autocomplete-results__link" href="#"><span class="autocomplete-results__title">Dead Heat</span><span class="autocomplete-results__summary">This article explains what a dead heat is across all sports and explains how we settle bets that end in this manner.</span></a></li>
+          <li class="autocomplete-results__container"><a class="autocomplete-results__link" href="#"><span class="autocomplete-results__title">Rule 4 Deductions</span><span class="autocomplete-results__summary">Read this article if you have placed a bet on a winning horse but your winnings were not what you were expecting.</span></a></li>
+          <li class="autocomplete-results__container"><a class="autocomplete-results__link" href="#"><span class="autocomplete-results__title">Non Runners</span><span class="autocomplete-results__summary">This article explains what a non runner is and what happens to your bet on a non-runner market.</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="main">
+  <div class="main-container">
+    <!-- No AI summary — this is the current search experience -->
+    <section class="topQueries">
+      <h2>The Basic Stuff</h2>
+      <ul class="topQueriesList">
+        <li class="topQueriesList-item"><a href="#">Reopen a closed account</a></li>
+        <li class="topQueriesList-item"><a href="#">Withdrawal Queries</a></li>
+        <li class="topQueriesList-item"><a href="#">Verification &amp; providing ID</a></li>
+        <li class="topQueriesList-item"><a href="#">Welcome Offer: Sky Bet</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2 class="category-title">Need a hand with something?</h2>
+      <ul class="category-list">
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-deposit"></div></div><span>Deposit &amp; Withdraw</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-promos"></div></div><span>Promotions &amp; Rewards</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-safer"></div></div><span>Safer Gambling</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-account"></div></div><span>Account Help</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-football"></div></div><span>Football Season 2025/26</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-betting"></div></div><span>Betting</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-aboutus"></div></div><span>About us</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-rules"></div></div><span>Market Rules</span></a></li>
+        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-virtual"></div></div><span>Virtual Sports Rules</span></a></li>
+      </ul>
+    </section>
+    <section class="message-us">
+      <h2>Still not clear?</h2>
+      <div class="message-us-container">
+        <div class="message-us-icon"></div>
+        <div class="message-us-text">Give us a message and we'll try and sort it!</div>
+        <button class="secondary">Contact us</button>
+      </div>
+    </section>
+  </div>
+</div>
+<footer><div class="back-to-top-container"><button class="back-to-top">↑</button></div></footer>
+</body>
+</html>
