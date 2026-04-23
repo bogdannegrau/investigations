@@ -33,7 +33,8 @@
   .hero-content h1 { color: #fff; }
   .hero-footer { margin: 16px 0 0; padding: 0 24px; position: relative; z-index: 1001; }
 
-  .search-input { position: relative; width: 500px; }
+  /* Search input — same width as results panel */
+  .search-input { position: relative; width: 560px; }
   .search-input input {
     font-family: SkyText, sans-serif; font-size: 16px; line-height: 24px; height: 48px;
     border: 1px solid #f4f4f4; background: #f4f4f4; color: #1a1a1a;
@@ -45,15 +46,14 @@
     background: transparent url('https://support.skybet.com/assets/img/icons/search-icon.svg') no-repeat center center;
   }
 
-  /* Results panel drops down from search input */
+  /* Results panel — same width as search input */
   .results-panel {
-    position: absolute; top: 48px; left: 0; width: 560px;
+    position: absolute; top: 48px; left: 0; width: 100%;
     background: #fff; border-radius: 0 0 8px 8px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.2);
     max-height: 520px; overflow-y: auto; z-index: 1;
   }
 
-  /* Dimmed backdrop */
   .backdrop {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.35); z-index: 999;
@@ -99,16 +99,27 @@
     padding: 8px 14px; font-family: SkyText, sans-serif; font-size: 13px;
     color: #8c8c8c; outline: none; background: #fafafa;
   }
-  .ai-mode-inline .ai-btn {
+  /* AI Mode button — Sky Bet logo-inspired: dark pill, bold italic, spark */
+  .ai-mode-btn {
+    display: inline-flex; align-items: center; gap: 5px;
     background: #1a1a1a; color: #fff; border: none; border-radius: 20px;
-    padding: 8px 16px; font-size: 13px; font-weight: 700;
+    padding: 7px 16px; font-size: 13px; font-weight: 700; font-style: italic;
     font-family: SkyText, sans-serif; cursor: pointer; white-space: nowrap;
+    letter-spacing: 0.3px;
   }
-  .ai-mode-inline .ai-btn:hover { background: #333; }
+  .ai-mode-btn:hover { background: #333; }
+  .ai-mode-btn .btn-spark { font-style: normal; font-size: 11px; }
 
-  .results-divider { height: 1px; background: #e8e8e8; }
+  /* Section divider with title */
+  .section-header {
+    display: flex; align-items: center; gap: 7px;
+    padding: 12px 18px 8px; border-top: 1px solid #e8e8e8;
+  }
+  .section-header .section-icon { font-size: 14px; color: #545454; }
+  .section-header .section-label { font-family: SkyText-Medium, sans-serif; font-size: 13px; color: #545454; font-weight: 700; }
+
   .article-results { list-style: none; padding: 0; }
-  .article-result { padding: 12px 18px; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+  .article-result { padding: 10px 18px; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
   .article-result:hover { background: #fafafa; }
   .article-result:last-child { border-bottom: none; }
   .article-result a { text-decoration: none; }
@@ -184,6 +195,8 @@
         <input type="text" value="what happened to my bets" readonly>
         <div class="search-icon"></div>
         <div class="results-panel">
+
+          <!-- AI Overview -->
           <div class="ai-overview">
             <div class="ai-overview-header">
               <span class="sparkle">✦</span>
@@ -202,12 +215,19 @@
             </div>
           </div>
           <button class="show-more-btn">Show more <span class="chevron">⌄</span></button>
+
+          <!-- AI Mode follow-up -->
           <div class="ai-mode-inline">
             <span class="ai-spark">✦</span>
             <input type="text" placeholder="Ask a follow-up about your bet..." readonly>
-            <button class="ai-btn">AI Mode</button>
+            <button class="ai-mode-btn"><span class="btn-spark">✦</span> AI Mode</button>
           </div>
-          <div class="results-divider"></div>
+
+          <!-- Related articles section with header -->
+          <div class="section-header">
+            <span class="section-icon">📄</span>
+            <span class="section-label">Related articles</span>
+          </div>
           <ul class="article-results">
             <li class="article-result"><a href="#"><div class="article-result-title">Winnings not what you expected?</div><div class="article-result-summary">This article explains some of the reasons that you may not have won as much as you were expecting from your bet...</div></a></li>
             <li class="article-result"><a href="#"><div class="article-result-title">Cash Out</div><div class="article-result-summary">Cash Out allows you to lock in a profit or loss before waiting for the event to finish.</div></a></li>
@@ -215,6 +235,7 @@
             <li class="article-result"><a href="#"><div class="article-result-title">Rule 4 Deductions</div><div class="article-result-summary">Read this article if you have placed a bet on a winning horse but your winnings were not what you expected.</div></a></li>
             <li class="article-result"><a href="#"><div class="article-result-title">Non Runners</div><div class="article-result-summary">This article explains what a non runner is and what happens to your bet on a non-runner market.</div></a></li>
           </ul>
+
         </div>
       </div>
     </div>
