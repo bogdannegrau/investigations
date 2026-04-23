@@ -14,11 +14,10 @@
   h1 { font-family: SkyText-Medium, sans-serif; font-size: 32px; line-height: 40px; font-weight: 400; }
   h2 { font-family: SkyText, sans-serif; font-size: 24px; font-weight: 700; line-height: 32px; }
 
-  /* Hero (page behind overlay) */
   .hlp-hero {
     background-image: url('https://images.prismic.io/support-skybettingandgaming/Z--6f3dAxsiBwU2g_Cactus-header_Football_2800x1000.jpg?auto=format,compress');
     background-position: center center; background-repeat: no-repeat; background-size: cover;
-    padding: 31px 0; min-height: 320px;
+    padding: 31px 0 40px;
   }
   .hlp-topnav nav {
     display: flex; justify-content: space-between; align-items: center;
@@ -32,10 +31,146 @@
   .column-container { width: 900px; margin: 0 auto; }
   .hero-content { margin: 100px 0 0; max-width: 500px; padding: 0 24px; }
   .hero-content h1 { color: #fff; }
+  .hero-footer { margin: 16px 0 0; padding: 0 24px; position: relative; z-index: 1001; }
 
+  .search-input { position: relative; width: 500px; }
+  .search-input input {
+    font-family: SkyText, sans-serif; font-size: 16px; line-height: 24px; height: 48px;
+    border: 1px solid #f4f4f4; background: #f4f4f4; color: #1a1a1a;
+    border-radius: 4px 4px 0 0; width: 100%; padding: 12px 36px 12px 48px; outline: none;
+    position: relative; z-index: 2;
+  }
+  .search-input .search-icon {
+    position: absolute; top: 4px; left: 0; width: 40px; height: 40px; z-index: 3;
+    background: transparent url('https://support.skybet.com/assets/img/icons/search-icon.svg') no-repeat center center;
+  }
+
+  .backdrop {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.35); z-index: 999;
+  }
+
+  /* Chat panel drops from search */
+  .chat-panel {
+    position: absolute; top: 48px; left: 0; width: 560px;
+    background: #fff; border-radius: 0 0 8px 8px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    max-height: 540px; display: flex; flex-direction: column; z-index: 1;
+  }
+
+  /* Panel header */
+  .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px; border-bottom: 1px solid #e8e8e8; flex-shrink: 0;
+  }
+  .panel-header-left { display: flex; align-items: center; gap: 8px; }
+  .panel-header .sp-back {
+    background: none; border: none; font-size: 16px; color: #545454; cursor: pointer; padding: 0 4px;
+  }
+  .ai-mode-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #1a1a1a; color: #fff; font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 12px;
+  }
+  .panel-header-sub { font-size: 11px; color: #8c8c8c; }
+
+  /* Chat body */
+  .panel-chat { overflow-y: auto; flex: 1; padding: 14px 16px; background: #fafafa; }
+
+  .message { margin-bottom: 14px; display: flex; gap: 8px; }
+  .message.user { justify-content: flex-end; }
+  .msg-avatar {
+    width: 26px; height: 26px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0; font-weight: 700;
+  }
+  .message.ai .msg-avatar { background: #1a1a1a; color: #fff; }
+  .message.user .msg-avatar { background: #185fd8; color: #fff; }
+  .msg-content { max-width: 85%; }
+  .message.user .msg-bubble {
+    background: #185fd8; color: #fff;
+    padding: 9px 13px; border-radius: 12px 12px 4px 12px;
+    font-size: 13px; line-height: 19px;
+  }
+  .message.ai .msg-bubble {
+    background: #fff; color: #333;
+    padding: 10px 14px; border-radius: 12px 12px 12px 4px;
+    font-size: 13px; line-height: 19px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .message.ai .msg-bubble p { margin-bottom: 6px; }
+  .message.ai .msg-bubble p:last-child { margin-bottom: 0; }
+  .message.ai .msg-bubble strong { color: #1a1a1a; }
+  .message.ai .msg-bubble ul { margin: 4px 0 8px; list-style: none; }
+  .message.ai .msg-bubble ul li { padding: 2px 0 2px 12px; position: relative; font-size: 12px; line-height: 18px; }
+  .message.ai .msg-bubble ul li::before {
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 4px; height: 4px; border-radius: 50%; background: #545454;
+  }
+  .msg-sources { margin-top: 6px; font-size: 11px; color: #8c8c8c; }
+  .msg-sources a { color: #185fd8; text-decoration: none; font-weight: 700; }
+  .msg-meta { font-size: 10px; color: #8c8c8c; margin-top: 2px; padding: 0 4px; }
+  .message.user .msg-meta { text-align: right; }
+
+  /* Bet card */
+  .bet-card {
+    background: #f4f4f4; border: 1px solid #e8e8e8; border-radius: 6px;
+    padding: 10px 12px; margin: 8px 0;
+  }
+  .bet-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 11px; color: #545454; }
+  .bet-card-header .bet-id { font-weight: 700; color: #1a1a1a; }
+  .bet-card-status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .bet-card-status.won { background: #cde7d9; color: #006858; }
+  .bet-card-main { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+  .bet-card-detail { font-size: 12px; color: #545454; line-height: 17px; }
+  .bet-card-detail .highlight { color: #c62828; font-weight: 700; }
+
+  /* Tool call */
+  .tool-call {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #cde7d9; color: #006858; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px; margin-bottom: 6px;
+  }
+  .tool-call .dot { width: 4px; height: 4px; border-radius: 50%; background: #009e51; }
+
+  /* Suggestions */
+  .suggestions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; padding: 0 2px; }
+  .suggestion-chip {
+    background: #fff; border: 1.5px solid #d5d5d8; border-radius: 14px;
+    padding: 5px 11px; font-size: 11px; color: #1a1a1a; font-weight: 700;
+    cursor: pointer; font-family: SkyText, sans-serif;
+  }
+  .suggestion-chip:hover { background: #f4f4f4; border-color: #1a1a1a; }
+
+  /* Input bar */
+  .panel-input {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border-top: 1px solid #e8e8e8; flex-shrink: 0; background: #fff;
+  }
+  .panel-input input {
+    flex: 1; padding: 8px 12px; border: 1px solid #e0e0e0; background: #f4f4f4;
+    border-radius: 18px; font-size: 13px; font-family: SkyText, sans-serif;
+    outline: none; color: #1a1a1a;
+  }
+  .panel-input input:focus { border-color: #185fd8; background: #fff; }
+  .panel-input input::placeholder { color: #8c8c8c; }
+  .panel-input .send-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #1a1a1a; border: none; color: #fff; font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .panel-input .send-btn:hover { background: #333; }
+
+  .panel-escalation {
+    text-align: center; padding: 6px 14px 12px; flex-shrink: 0; background: #fff;
+    border-radius: 0 0 8px 8px;
+  }
+  .panel-escalation a { font-size: 11px; color: #545454; text-decoration: none; font-weight: 700; }
+  .panel-escalation a:hover { color: #1a1a1a; text-decoration: underline; }
+
+  /* Page content */
   #main { width: 100%; padding: 48px 12px 64px; display: flex; justify-content: center; }
   .main-container { max-width: 900px; width: 100%; }
-  .main-container > section:not(:last-child) { margin-bottom: 48px; }
   .topQueries h2 { margin-bottom: 16px; }
   .topQueriesList { list-style: none; }
   .topQueriesList-item {
@@ -50,163 +185,110 @@
     content: ''; width: 4px; height: 4px; border-radius: 50%;
     background: #1a1a1a; margin-right: 12px; flex-shrink: 0;
   }
-  .category-title { margin-bottom: 16px; }
-  .category-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .category-list-item .category {
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    padding: 24px 16px; background: #fff; border: 1px solid #fff;
-    box-shadow: 0 0 24px rgba(0,0,0,0.1); border-radius: 4px;
-    text-decoration: none; color: #1a1a1a; min-height: 120px;
-  }
-  .category-image-container { width: 48px; height: 48px; margin-bottom: 12px; }
-  .category-image { width: 48px; height: 48px; background-size: contain; background-repeat: no-repeat; background-position: center; }
-  .category span { font-size: 16px; line-height: 24px; font-weight: 700; }
-  .cat-deposit { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttQkMTzAJOCoeM_Deposit_and_Withdraw.svg'); }
-  .cat-promos { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttRkMTzAJOCoeQ_Promotions_and_Rewards.svg'); }
-  .cat-safer { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZjttR0MTzAJOCoeR_Safer_Gambling.svg'); }
-  .cat-account { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZzXc4a8jQArT03gg_account-cat.svg'); }
-  .cat-football { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/aJMtyqTt2nPbZ5Zx_SOSIcon25-26.svg'); }
-  .cat-betting { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Zz8N3a8jQArT1HD6_BettingDesktop.svg'); }
-
-  /* ===== OVERLAY ===== */
-  .search-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.45); z-index: 999;
-    display: flex; justify-content: center; padding-top: 60px;
-  }
-  .search-panel {
-    background: #fff; border-radius: 12px; width: 580px;
-    box-shadow: 0 8px 60px rgba(0,0,0,0.25); overflow: hidden;
-    max-height: calc(100vh - 100px); display: flex; flex-direction: column;
-  }
-
-  /* Panel header: AI Mode badge */
-  .panel-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 18px; border-bottom: 1px solid #e8e8e8; flex-shrink: 0;
-  }
-  .panel-header-left { display: flex; align-items: center; gap: 8px; }
-  .panel-header .sp-back {
-    background: none; border: none; font-size: 18px; color: #545454; cursor: pointer; padding: 0 4px;
-  }
-  .ai-mode-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: linear-gradient(135deg, #5b21b6, #7c3aed);
-    color: #fff; font-size: 12px; font-weight: 700;
-    padding: 4px 12px; border-radius: 14px;
-  }
-  .panel-header .sp-close {
-    width: 28px; height: 28px; border: none; background: #f0f0f0; border-radius: 50%;
-    font-size: 16px; color: #545454; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  }
-
-  /* Chat body inside the panel */
-  .panel-chat { overflow-y: auto; flex: 1; padding: 16px 18px; background: #fafafa; }
-
-  .message { margin-bottom: 16px; display: flex; gap: 10px; }
-  .message.user { justify-content: flex-end; }
-  .msg-avatar {
-    width: 28px; height: 28px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; flex-shrink: 0; font-weight: 700;
-  }
-  .message.ai .msg-avatar { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff; }
-  .message.user .msg-avatar { background: #1a1a1a; color: #fff; }
-  .msg-content { max-width: 85%; }
-  .message.user .msg-bubble {
-    background: #1a1a1a; color: #fff;
-    padding: 10px 14px; border-radius: 14px 14px 4px 14px;
-    font-size: 14px; line-height: 20px;
-  }
-  .message.ai .msg-bubble {
-    background: #fff; color: #333;
-    padding: 12px 16px; border-radius: 14px 14px 14px 4px;
-    font-size: 13px; line-height: 20px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  }
-  .message.ai .msg-bubble p { margin-bottom: 8px; }
-  .message.ai .msg-bubble p:last-child { margin-bottom: 0; }
-  .message.ai .msg-bubble strong { color: #1a1a1a; }
-  .message.ai .msg-bubble ul { margin: 6px 0 10px; list-style: none; }
-  .message.ai .msg-bubble ul li { padding: 3px 0 3px 14px; position: relative; font-size: 13px; }
-  .message.ai .msg-bubble ul li::before {
-    content: ''; position: absolute; left: 0; top: 10px;
-    width: 5px; height: 5px; border-radius: 50%; background: #7c3aed;
-  }
-  .msg-sources { margin-top: 8px; font-size: 11px; color: #8c8c8c; }
-  .msg-sources a { color: #5b21b6; text-decoration: none; font-weight: 700; }
-  .msg-meta { font-size: 10px; color: #8c8c8c; margin-top: 3px; padding: 0 4px; }
-  .message.user .msg-meta { text-align: right; }
-
-  /* Bet card */
-  .bet-card {
-    background: #f5f3ff; border: 1px solid #e8e8f0; border-radius: 8px;
-    padding: 12px 14px; margin: 10px 0;
-  }
-  .bet-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11px; color: #545454; }
-  .bet-card-header .bet-id { font-weight: 700; color: #1a1a1a; }
-  .bet-card-status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-  .bet-card-status.won { background: #cde7d9; color: #006858; }
-  .bet-card-main { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
-  .bet-card-detail { font-size: 12px; color: #545454; line-height: 18px; }
-  .bet-card-detail .highlight { color: #c62828; font-weight: 700; }
-
-  /* Tool call indicator */
-  .tool-call {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: #cde7d9; border: 1px solid #a8d8b9;
-    color: #006858; font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 4px; margin-bottom: 8px;
-  }
-  .tool-call .dot { width: 5px; height: 5px; border-radius: 50%; background: #009e51; }
-
-  /* Suggestions */
-  .suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding: 0 4px; }
-  .suggestion-chip {
-    background: #fff; border: 1.5px solid #d0d0d0; border-radius: 16px;
-    padding: 6px 12px; font-size: 12px; color: #1a1a1a; font-weight: 700;
-    cursor: pointer; font-family: SkyText, sans-serif;
-  }
-  .suggestion-chip:hover { background: #f5f3ff; border-color: #5b21b6; }
-
-  /* Input bar inside panel */
-  .panel-input {
-    display: flex; align-items: center; gap: 8px;
-    padding: 12px 16px; border-top: 1px solid #e8e8e8; flex-shrink: 0; background: #fff;
-  }
-  .panel-input input {
-    flex: 1; padding: 10px 14px; border: 1px solid #e0e0e0; background: #f8f8f8;
-    border-radius: 20px; font-size: 13px; font-family: SkyText, sans-serif;
-    outline: none; color: #1a1a1a;
-  }
-  .panel-input input:focus { border-color: #5b21b6; background: #fff; }
-  .panel-input input::placeholder { color: #8c8c8c; }
-  .panel-input .send-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: #5b21b6; border: none; color: #fff; font-size: 16px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .panel-input .send-btn:hover { background: #4c1d95; }
-
-  /* Escalation link */
-  .panel-escalation {
-    text-align: center; padding: 8px 16px 14px; flex-shrink: 0; background: #fff;
-  }
-  .panel-escalation a {
-    font-size: 12px; color: #545454; text-decoration: none; font-weight: 700;
-  }
-  .panel-escalation a:hover { color: #1a1a1a; text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<!-- Page behind overlay -->
+<div class="backdrop"></div>
+
 <section class="hlp-hero">
   <div class="hlp-topnav"><nav><a href="#"><span>‹</span> <span>Back to Sky Bet</span></a></nav></div>
   <div class="column-container">
     <div class="hero-content"><h1>How can we help?</h1></div>
+    <div class="hero-footer">
+      <div class="search-input">
+        <input type="text" value="what happened to my bets" readonly>
+        <div class="search-icon"></div>
+
+        <div class="chat-panel">
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <button class="sp-back">‹</button>
+              <div class="ai-mode-badge">✦ AI Mode</div>
+              <span class="panel-header-sub">Powered by AI</span>
+            </div>
+          </div>
+
+          <div class="panel-chat">
+            <!-- Turn 1: User -->
+            <div class="message user">
+              <div class="msg-content">
+                <div class="msg-bubble">What happened to my bets?</div>
+                <div class="msg-meta">9:14 PM</div>
+              </div>
+              <div class="msg-avatar">BN</div>
+            </div>
+
+            <!-- Turn 1: AI -->
+            <div class="message ai">
+              <div class="msg-avatar">✦</div>
+              <div class="msg-content">
+                <div class="msg-bubble">
+                  <p>There are several reasons your bet may not have paid out as expected:</p>
+                  <ul>
+                    <li><strong>Dead Heat</strong> — Two or more selections tied, winnings divided proportionally.</li>
+                    <li><strong>Rule 4 Deduction</strong> — A late withdrawal in Horse Racing reduces your payout.</li>
+                    <li><strong>Non-Runner / Void</strong> — A selection that didn't participate is voided.</li>
+                  </ul>
+                  <p>Would you like me to <strong>check your specific bets</strong>?</p>
+                  <div class="msg-sources">📎 <a href="#">Winnings not what you expected?</a> · <a href="#">Dead Heat</a> · <a href="#">Rule 4</a></div>
+                </div>
+                <div class="msg-meta">9:14 PM</div>
+              </div>
+            </div>
+
+            <!-- Turn 2: User -->
+            <div class="message user">
+              <div class="msg-content">
+                <div class="msg-bubble">Yes, check my last bet please</div>
+                <div class="msg-meta">9:15 PM</div>
+              </div>
+              <div class="msg-avatar">BN</div>
+            </div>
+
+            <!-- Turn 2: AI with bet card -->
+            <div class="message ai">
+              <div class="msg-avatar">✦</div>
+              <div class="msg-content">
+                <div class="tool-call"><span class="dot"></span> Looked up your recent bets</div>
+                <div class="msg-bubble">
+                  <p>I found your most recent bet:</p>
+                  <div class="bet-card">
+                    <div class="bet-card-header"><span class="bet-id">Bet #SB-29841773</span><span class="bet-card-status won">✓ Won</span></div>
+                    <div class="bet-card-main">🏇 3:40 Cheltenham — Lucky Star</div>
+                    <div class="bet-card-detail">
+                      Odds: 5/1 → Paid: <strong>£4.23</strong> <span style="color:#8c8c8c">(expected £6.00)</span><br>
+                      <span class="highlight">⚠️ Rule 4 Deduction: 20p in the £</span><br>
+                      "Midnight Express" was a late withdrawal
+                    </div>
+                  </div>
+                  <p>A <strong>Rule 4 deduction of 20p in the £</strong> reduced your payout from £6.00 to £4.23.</p>
+                  <div class="msg-sources">📎 <a href="#">Rule 4 Deductions — Full explanation</a></div>
+                </div>
+                <div class="msg-meta">9:15 PM</div>
+              </div>
+            </div>
+
+            <div class="suggestions">
+              <button class="suggestion-chip">How is Rule 4 calculated?</button>
+              <button class="suggestion-chip">Check another bet</button>
+              <button class="suggestion-chip">I think this is wrong</button>
+            </div>
+          </div>
+
+          <div class="panel-input">
+            <input type="text" placeholder="Ask a follow-up..." readonly>
+            <button class="send-btn">➤</button>
+          </div>
+          <div class="panel-escalation">
+            <a href="#">🧑‍💼 Need a human? Talk to an agent</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
 <div id="main">
   <div class="main-container">
     <section class="topQueries">
@@ -216,113 +298,7 @@
         <li class="topQueriesList-item"><a href="#">Withdrawal Queries</a></li>
       </ul>
     </section>
-    <section>
-      <h2 class="category-title">Need a hand with something?</h2>
-      <ul class="category-list">
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-deposit"></div></div><span>Deposit &amp; Withdraw</span></a></li>
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-promos"></div></div><span>Promotions</span></a></li>
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-safer"></div></div><span>Safer Gambling</span></a></li>
-      </ul>
-    </section>
   </div>
 </div>
-
-<!-- ===== SEARCH OVERLAY — AI MODE CHAT ===== -->
-<div class="search-overlay">
-  <div class="search-panel">
-
-    <!-- Header -->
-    <div class="panel-header">
-      <div class="panel-header-left">
-        <button class="sp-back">‹</button>
-        <div class="ai-mode-badge">✦ AI Mode</div>
-      </div>
-      <button class="sp-close">✕</button>
-    </div>
-
-    <!-- Chat body -->
-    <div class="panel-chat">
-
-      <!-- Turn 1: User -->
-      <div class="message user">
-        <div class="msg-content">
-          <div class="msg-bubble">What happened to my bets?</div>
-          <div class="msg-meta">9:14 PM</div>
-        </div>
-        <div class="msg-avatar">BN</div>
-      </div>
-
-      <!-- Turn 1: AI -->
-      <div class="message ai">
-        <div class="msg-avatar">✦</div>
-        <div class="msg-content">
-          <div class="msg-bubble">
-            <p>There are several reasons your bet may not have paid out as expected:</p>
-            <ul>
-              <li><strong>Dead Heat</strong> — Two or more selections tied, winnings divided proportionally.</li>
-              <li><strong>Rule 4 Deduction</strong> — A late withdrawal in Horse Racing reduces your payout.</li>
-              <li><strong>Non-Runner / Void</strong> — A selection that didn't participate is voided.</li>
-              <li><strong>Each Way Terms</strong> — Place terms depend on runners under starter's orders.</li>
-            </ul>
-            <p>Would you like me to <strong>check your specific bets</strong>?</p>
-            <div class="msg-sources">📎 <a href="#">Winnings not what you expected?</a> · <a href="#">Dead Heat</a> · <a href="#">Rule 4</a></div>
-          </div>
-          <div class="msg-meta">9:14 PM</div>
-        </div>
-      </div>
-
-      <!-- Turn 2: User -->
-      <div class="message user">
-        <div class="msg-content">
-          <div class="msg-bubble">Yes, check my last bet please</div>
-          <div class="msg-meta">9:15 PM</div>
-        </div>
-        <div class="msg-avatar">BN</div>
-      </div>
-
-      <!-- Turn 2: AI with bet card -->
-      <div class="message ai">
-        <div class="msg-avatar">✦</div>
-        <div class="msg-content">
-          <div class="tool-call"><span class="dot"></span> Looked up your recent bets</div>
-          <div class="msg-bubble">
-            <p>I found your most recent bet:</p>
-            <div class="bet-card">
-              <div class="bet-card-header"><span class="bet-id">Bet #SB-29841773</span><span class="bet-card-status won">✓ Won</span></div>
-              <div class="bet-card-main">🏇 3:40 Cheltenham — Lucky Star</div>
-              <div class="bet-card-detail">
-                Odds: 5/1 → Paid: <strong>£4.23</strong> <span style="color:#8c8c8c">(expected £6.00)</span><br>
-                <span class="highlight">⚠️ Rule 4 Deduction: 20p in the £</span><br>
-                Reason: "Midnight Express" was a late withdrawal
-              </div>
-            </div>
-            <p>A <strong>Rule 4 deduction of 20p in the £</strong> reduced your payout from £6.00 to £4.23.</p>
-            <div class="msg-sources">📎 <a href="#">Rule 4 Deductions — Full explanation</a></div>
-          </div>
-          <div class="msg-meta">9:15 PM</div>
-        </div>
-      </div>
-
-      <!-- Suggestion chips -->
-      <div class="suggestions">
-        <button class="suggestion-chip">How is Rule 4 calculated?</button>
-        <button class="suggestion-chip">Check another bet</button>
-        <button class="suggestion-chip">I think this is wrong</button>
-      </div>
-
-    </div>
-
-    <!-- Input -->
-    <div class="panel-input">
-      <input type="text" placeholder="Ask a follow-up..." readonly>
-      <button class="send-btn">➤</button>
-    </div>
-    <div class="panel-escalation">
-      <a href="#">🧑‍💼 Need a human? Talk to an agent</a>
-    </div>
-
-  </div>
-</div>
-
 </body>
 </html>
