@@ -14,10 +14,11 @@
   h2 { font-family: SkyText, sans-serif; font-size: 24px; font-weight: 700; line-height: 32px; }
   strong { font-weight: 700; }
 
+  /* Hero */
   .hlp-hero {
     background-image: url('https://images.prismic.io/support-skybettingandgaming/Z--6f3dAxsiBwU2g_Cactus-header_Football_2800x1000.jpg?auto=format,compress');
     background-position: center center; background-repeat: no-repeat; background-size: cover;
-    padding: 31px 0; position: relative;
+    padding: 31px 0; position: relative; min-height: 320px;
   }
   .hlp-topnav nav {
     display: flex; justify-content: space-between; align-items: center;
@@ -29,90 +30,132 @@
   }
   .hlp-topnav nav a span { font-weight: 700; }
   .column-container { width: 900px; margin: 0 auto; }
-  .hero-content { margin: 140px 0 0; max-width: 500px; padding: 0 24px; }
+  .hero-content { margin: 100px 0 0; max-width: 500px; padding: 0 24px; }
   .hero-content h1 { color: #fff; }
   .hero-footer { margin: 16px 0 0; padding: 0 24px; }
-  .search-input { position: relative; width: 500px; }
-  .search-input input {
-    font-family: SkyText, sans-serif; font-size: 16px; line-height: 24px; height: 48px;
-    border: 1px solid #f4f4f4; background: #f4f4f4; color: #1a1a1a;
-    border-radius: 4px; width: 100%; padding: 12px 36px 12px 48px; outline: none;
-  }
-  .search-input .search-icon {
-    position: absolute; top: 4px; left: 0; width: 40px; height: 40px;
-    background: transparent url('https://support.skybet.com/assets/img/icons/search-icon.svg') no-repeat center center;
-  }
-  .autocomplete-results {
-    position: absolute; width: 100%; list-style: none;
-    margin-top: -4px; background: #f4f4f4;
-    border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
-    max-height: 600px; overflow-y: auto; padding: 12px; z-index: 100;
-  }
-  .autocomplete-results__container {
-    border-radius: 4px; display: flex; flex-direction: column;
-    justify-content: center; padding: 8px 12px; min-height: 56px;
-    margin-bottom: 4px; transition: background-color 0.1s linear; cursor: pointer;
-  }
-  .autocomplete-results__container:hover { background: #e0e0e0; }
-  .autocomplete-results__link { text-decoration: none; color: #545454; }
-  .autocomplete-results__title { font-weight: 700; font-size: 16px; line-height: 20px; color: #1a1a1a; }
-  .autocomplete-results__summary { font-size: 12px; color: #545454; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+  /* Overlay backdrop */
+  .search-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); z-index: 999;
+    display: flex; justify-content: center; padding-top: 80px;
+  }
+
+  /* Search panel (modal-like, floating) */
+  .search-panel {
+    background: #fff; border-radius: 12px; width: 560px;
+    box-shadow: 0 8px 60px rgba(0,0,0,0.25); overflow: hidden;
+    max-height: calc(100vh - 120px); display: flex; flex-direction: column;
+  }
+
+  /* Search input row inside the panel */
+  .search-panel-input {
+    display: flex; align-items: center; padding: 14px 18px;
+    border-bottom: 1px solid #e8e8e8; flex-shrink: 0;
+  }
+  .search-panel-input .sp-icon {
+    width: 22px; height: 22px; margin-right: 12px; flex-shrink: 0; opacity: 0.5;
+    background: url('https://support.skybet.com/assets/img/icons/search-icon.svg') no-repeat center center;
+    background-size: 18px 18px;
+  }
+  .search-panel-input .sp-text {
+    flex: 1; font-family: SkyText, sans-serif; font-size: 16px; color: #1a1a1a; line-height: 24px;
+  }
+  .search-panel-input .sp-close {
+    width: 28px; height: 28px; border: none; background: #f0f0f0; border-radius: 50%;
+    font-size: 16px; color: #545454; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Scrollable results body */
+  .search-panel-body {
+    overflow-y: auto; flex: 1; padding: 0;
+  }
+
+  /* AI Overview section */
+  .ai-overview {
+    padding: 18px 20px 0;
+  }
+  .ai-overview-header {
+    display: flex; align-items: center; gap: 7px; margin-bottom: 12px;
+  }
+  .ai-overview-header .sparkle { font-size: 16px; color: #5b21b6; }
+  .ai-overview-header .label { font-family: SkyText-Medium, sans-serif; font-size: 14px; color: #1a1a1a; font-weight: 700; }
+  .ai-overview-body { font-size: 14px; line-height: 22px; color: #333; }
+  .ai-overview-body p { margin-bottom: 10px; }
+  .ai-overview-body h3 { font-size: 15px; font-weight: 700; margin: 14px 0 6px; color: #1a1a1a; line-height: 22px; }
+  .ai-overview-body ul { margin: 6px 0 10px 4px; list-style: none; }
+  .ai-overview-body ul li { padding: 3px 0 3px 16px; position: relative; font-size: 14px; line-height: 21px; }
+  .ai-overview-body ul li::before {
+    content: ''; position: absolute; left: 0; top: 10px;
+    width: 5px; height: 5px; border-radius: 50%; background: #333;
+  }
+  .ai-overview-body strong { color: #1a1a1a; }
+
+  /* Clipped with gradient fade */
+  .ai-overview-clip {
+    max-height: 180px; overflow: hidden; position: relative;
+  }
+  .ai-overview-clip::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+    background: linear-gradient(transparent, #fff);
+  }
+
+  /* Show more button */
+  .show-more-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; padding: 12px 0; margin: 0;
+    background: #f4f4f4; border: none; border-radius: 0;
+    font-family: SkyText, sans-serif; font-size: 14px; font-weight: 700;
+    color: #1a1a1a; cursor: pointer;
+  }
+  .show-more-btn:hover { background: #ebebeb; }
+  .show-more-btn .chevron { font-size: 12px; transition: transform 0.2s; }
+
+  /* AI Mode follow-up CTA inside the panel */
+  .ai-mode-inline {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-top: 1px solid #e8e8e8; margin-top: 2px;
+  }
+  .ai-mode-inline .ai-spark { font-size: 14px; }
+  .ai-mode-inline input {
+    flex: 1; border: 1px solid #e0e0e0; border-radius: 20px;
+    padding: 8px 14px; font-family: SkyText, sans-serif; font-size: 13px;
+    color: #8c8c8c; outline: none; background: #fafafa;
+  }
+  .ai-mode-inline .ai-btn {
+    background: #5b21b6; color: #fff; border: none; border-radius: 20px;
+    padding: 8px 16px; font-size: 13px; font-weight: 700;
+    font-family: SkyText, sans-serif; cursor: pointer; white-space: nowrap;
+  }
+  .ai-mode-inline .ai-btn:hover { background: #4c1d95; }
+
+  /* Separator */
+  .results-divider {
+    height: 1px; background: #e8e8e8; margin: 0;
+  }
+
+  /* Article results */
+  .article-results { list-style: none; padding: 0; }
+  .article-result {
+    padding: 14px 20px; cursor: pointer; border-bottom: 1px solid #f0f0f0;
+  }
+  .article-result:hover { background: #fafafa; }
+  .article-result:last-child { border-bottom: none; }
+  .article-result a { text-decoration: none; }
+  .article-result-title { font-weight: 700; font-size: 15px; line-height: 20px; color: #1a1a1a; margin-bottom: 2px; }
+  .article-result-summary { font-size: 13px; color: #545454; line-height: 18px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* Page content behind overlay */
   #main { width: 100%; padding: 48px 12px 64px; display: flex; justify-content: center; }
   .main-container { max-width: 900px; width: 100%; }
   .main-container > section:not(:last-child) { margin-bottom: 48px; }
-
-  /* === AI Summary Card === */
-  .ai-summary {
-    background: #f9f9ff; border: 1px solid #e8e8f0; border-radius: 8px;
-    padding: 20px 24px; margin-bottom: 32px; position: relative;
-  }
-  .ai-summary::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, #5b21b6, #7c3aed, #a78bfa);
-    border-radius: 8px 8px 0 0;
-  }
-  .ai-summary-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-  .ai-summary-header .label { font-family: SkyText-Medium, sans-serif; font-size: 14px; color: #5b21b6; }
-  .ai-badge {
-    background: #ede9fe; color: #5b21b6; font-size: 10px; font-weight: 700;
-    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;
-  }
-  .ai-summary-body { font-size: 14px; line-height: 22px; color: #545454; }
-  .ai-summary-body p { margin-bottom: 10px; }
-  .ai-summary-body ul { margin: 8px 0 14px; list-style: none; }
-  .ai-summary-body ul li { padding: 5px 0 5px 18px; position: relative; }
-  .ai-summary-body ul li::before {
-    content: ''; position: absolute; left: 0; top: 12px;
-    width: 6px; height: 6px; border-radius: 50%; background: #7c3aed;
-  }
-  .ai-summary-body strong { color: #1a1a1a; }
-  .ai-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e8e8f0; font-size: 12px; color: #8c8c8c; }
-  .ai-sources a { color: #5b21b6; text-decoration: none; font-weight: 700; }
-  .ai-sources a:hover { text-decoration: underline; }
-  .ai-mode-cta {
-    display: flex; align-items: center; margin-top: 14px;
-    padding: 10px 14px; background: #fff; border: 1px solid #e8e8f0; border-radius: 4px;
-  }
-  .ai-mode-cta .ai-icon { font-size: 16px; margin-right: 10px; }
-  .ai-mode-cta input {
-    flex: 1; border: none; outline: none; font-family: SkyText, sans-serif;
-    font-size: 14px; color: #8c8c8c; background: transparent;
-  }
-  .ai-mode-btn {
-    background: #5b21b6; color: #fff; border: none; border-radius: 4px;
-    padding: 8px 16px; font-size: 14px; font-weight: 700;
-    font-family: SkyText, sans-serif; cursor: pointer;
-  }
-  .ai-mode-btn:hover { background: #4c1d95; }
-
   .topQueries h2 { margin-bottom: 16px; }
   .topQueriesList { list-style: none; }
   .topQueriesList-item {
     background: #fff; box-shadow: 0 0 24px rgba(0,0,0,0.1);
     border-radius: 4px; margin-bottom: 8px; padding: 16px 20px; cursor: pointer;
   }
-  .topQueriesList-item:hover { box-shadow: 0 0 24px rgba(0,0,0,0.2); }
   .topQueriesList-item a {
     color: #1a1a1a; text-decoration: none; font-size: 16px; font-weight: 700;
     line-height: 24px; display: flex; align-items: center;
@@ -121,7 +164,6 @@
     content: ''; width: 4px; height: 4px; border-radius: 50%;
     background: #1a1a1a; margin-right: 12px; flex-shrink: 0;
   }
-
   .category-title { margin-bottom: 16px; }
   .category-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .category-list-item .category {
@@ -130,7 +172,6 @@
     box-shadow: 0 0 24px rgba(0,0,0,0.1); border-radius: 4px;
     text-decoration: none; color: #1a1a1a; min-height: 120px;
   }
-  .category-list-item .category:hover { background: #fcfcfd; box-shadow: 0 0 24px rgba(0,0,0,0.2); }
   .category-image-container { width: 48px; height: 48px; margin-bottom: 12px; }
   .category-image { width: 48px; height: 48px; background-size: contain; background-repeat: no-repeat; background-position: center; }
   .category span { font-size: 16px; line-height: 24px; font-weight: 700; }
@@ -143,7 +184,6 @@
   .cat-aboutus { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Zz8QUK8jQArT1HFb_AboutUsDesktop.svg'); }
   .cat-rules { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/ZzXdra8jQArT03hN_Rules-cat-best.svg'); }
   .cat-virtual { background-image: url('https://support-skybettingandgaming.cdn.prismic.io/support-skybettingandgaming/Z_TWSXdAxsiBwba6_VirtualIcon.svg'); }
-
   .message-us { text-align: center; }
   .message-us h2 { margin-bottom: 8px; }
   .message-us-container {
@@ -163,13 +203,6 @@
     font-weight: 700; font-size: 16px; line-height: 24px; padding: 12px 8px;
     background: #fff; border: 2px solid #1a1a1a; color: #1a1a1a;
   }
-  .secondary:hover { background: #fafafa; }
-  .back-to-top-container { display: flex; justify-content: center; padding: 24px 0; }
-  .back-to-top {
-    background: #fff; border: 2px solid #f2f2f7; border-radius: 50%;
-    width: 48px; height: 48px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; color: #1a1a1a;
-  }
   .typing-cursor {
     display: inline-block; width: 2px; height: 14px; background: #5b21b6;
     margin-left: 2px; animation: blink 1s infinite; vertical-align: text-bottom;
@@ -178,47 +211,16 @@
 </style>
 </head>
 <body>
+
+<!-- Page behind overlay (dimmed) -->
 <section class="hlp-hero">
   <div class="hlp-topnav"><nav><a href="#"><span>‹</span> <span>Back to Sky Bet</span></a></nav></div>
   <div class="column-container">
     <div class="hero-content"><h1>How can we help?</h1></div>
-    <div class="hero-footer">
-      <div class="search-input">
-        <input type="text" value="what happened to my bets" readonly>
-        <div class="search-icon"></div>
-        <!-- Autocomplete closed after search submitted — AI Summary appears below -->
-      </div>
-    </div>
   </div>
 </section>
-
 <div id="main">
   <div class="main-container">
-    <section>
-      <div class="ai-summary">
-        <div class="ai-summary-header">
-          <span style="font-size:18px">✨</span>
-          <span class="label">AI Summary</span>
-          <span class="ai-badge">Beta</span>
-        </div>
-        <div class="ai-summary-body">
-          <p>There are several reasons your bet may not have paid out as expected:</p>
-          <ul>
-            <li><strong>Dead Heat</strong> — If two or more selections tied for a position, your winnings are divided proportionally between the joint winners.</li>
-            <li><strong>Rule 4 Deduction</strong> — If a runner was withdrawn late from a horse race, a deduction is applied to your winnings. The amount depends on the withdrawn horse's price.</li>
-            <li><strong>Non-Runner / Void</strong> — If a selection didn't participate, it's voided. In accumulators, this reduces your bet to the remaining selections.</li>
-            <li><strong>Each Way Terms</strong> — Place terms are determined by runners under starter's orders. Fewer runners can mean fewer places paid.</li>
-          </ul>
-          <p>If your returns still don't seem right, you can check how to calculate your winnings or contact us for a review.<span class="typing-cursor"></span></p>
-        </div>
-        <div class="ai-sources">📎 Sources: <a href="#">Winnings not what you expected?</a> · <a href="#">Dead Heat</a> · <a href="#">Rule 4 Deductions</a> · <a href="#">Non Runners</a></div>
-        <div class="ai-mode-cta">
-          <span class="ai-icon">🤖</span>
-          <input type="text" placeholder="Ask a follow-up question..." readonly>
-          <button class="ai-mode-btn">AI Mode →</button>
-        </div>
-      </div>
-    </section>
     <section class="topQueries">
       <h2>The Basic Stuff</h2>
       <ul class="topQueriesList">
@@ -237,9 +239,6 @@
         <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-account"></div></div><span>Account Help</span></a></li>
         <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-football"></div></div><span>Football Season 2025/26</span></a></li>
         <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-betting"></div></div><span>Betting</span></a></li>
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-aboutus"></div></div><span>About us</span></a></li>
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-rules"></div></div><span>Market Rules</span></a></li>
-        <li class="category-list-item"><a class="category" href="#"><div class="category-image-container"><div class="category-image cat-virtual"></div></div><span>Virtual Sports Rules</span></a></li>
       </ul>
     </section>
     <section class="message-us">
@@ -252,6 +251,71 @@
     </section>
   </div>
 </div>
-<footer><div class="back-to-top-container"><button class="back-to-top">↑</button></div></footer>
+
+<!-- ===== SEARCH OVERLAY (modal) ===== -->
+<div class="search-overlay">
+  <div class="search-panel">
+
+    <!-- Search input row -->
+    <div class="search-panel-input">
+      <div class="sp-icon"></div>
+      <span class="sp-text">what happened to my bets</span>
+      <button class="sp-close">✕</button>
+    </div>
+
+    <div class="search-panel-body">
+
+      <!-- AI Overview -->
+      <div class="ai-overview">
+        <div class="ai-overview-header">
+          <span class="sparkle">✦</span>
+          <span class="label">AI Overview</span>
+        </div>
+        <div class="ai-overview-clip">
+          <div class="ai-overview-body">
+            <p>There are several reasons your bet may not have paid out as expected. Here's a checklist of the most common causes:</p>
+            <h3>1. Dead Heat</h3>
+            <ul>
+              <li><strong>What it means:</strong> Two or more selections tied for a position, so your winnings are divided proportionally between the joint winners.</li>
+            </ul>
+            <h3>2. Rule 4 Deduction</h3>
+            <ul>
+              <li><strong>What it means:</strong> A runner was withdrawn late from a horse race, and a deduction is applied to your winnings. The amount depends on the withdrawn horse's price.</li>
+            </ul>
+            <h3>3. Non-Runner / Void Selection</h3>
+            <ul>
+              <li><strong>What it means:</strong> If a selection didn't participate, it's voided. In accumulators this reduces your bet to the remaining selections.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Show more -->
+      <button class="show-more-btn">
+        Show more <span class="chevron">⌄</span>
+      </button>
+
+      <!-- AI Mode follow-up -->
+      <div class="ai-mode-inline">
+        <span class="ai-spark">✦</span>
+        <input type="text" placeholder="Ask a follow-up about your bet..." readonly>
+        <button class="ai-btn">AI Mode</button>
+      </div>
+
+      <div class="results-divider"></div>
+
+      <!-- Article results below -->
+      <ul class="article-results">
+        <li class="article-result"><a href="#"><div class="article-result-title">Winnings not what you expected?</div><div class="article-result-summary">This article explains some of the reasons that you may not have won as much as you were expecting from your bet...</div></a></li>
+        <li class="article-result"><a href="#"><div class="article-result-title">Cash Out</div><div class="article-result-summary">Cash Out allows you to lock in a profit or loss before waiting for the event to finish.</div></a></li>
+        <li class="article-result"><a href="#"><div class="article-result-title">Dead Heat</div><div class="article-result-summary">This article explains what a dead heat is across all sports and explains how we settle bets that end in this manner.</div></a></li>
+        <li class="article-result"><a href="#"><div class="article-result-title">Rule 4 Deductions</div><div class="article-result-summary">Read this article if you have placed a bet on a winning horse but your winnings were not what you were expecting.</div></a></li>
+        <li class="article-result"><a href="#"><div class="article-result-title">Non Runners</div><div class="article-result-summary">This article explains what a non runner is and what happens to your bet on a non-runner market.</div></a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
