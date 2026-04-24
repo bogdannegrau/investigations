@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Customer Support — Strategic Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f9fb;
+    color: #1a1a2e;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .page-header .subtitle {
+    font-size: 15px;
+    color: #6b7280;
+    font-weight: 400;
+  }
+
+  /* ── AI Models (top tier) ── */
+  .tier {
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .tier-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9ca3af;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .models-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .model-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 150px;
+    transition: box-shadow 0.2s;
+    position: relative;
+  }
+
+  .model-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .model-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .model-card .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .model-card .detail {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+  }
+
+  /* ── Connector arrows ── */
+  .connectors {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+    position: relative;
+  }
+
+  .connector-line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+    margin: 0 auto;
+  }
+
+  .connector-spread {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    padding: 8px 0 0;
+    position: relative;
+    height: 50px;
+  }
+
+  .connector-spread::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 12px;
+    background: #d1d5db;
+  }
+
+  .connector-spread::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: calc(50% - 340px);
+    width: 680px;
+    height: 2px;
+    background: #d1d5db;
+  }
+
+  .branch-down {
+    position: absolute;
+    top: 14px;
+    width: 2px;
+    height: 36px;
+    background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+  }
+
+  .branch-down.left { left: calc(50% - 340px); }
+  .branch-down.center { left: 50%; transform: translateX(-1px); }
+  .branch-down.right { left: calc(50% + 339px); }
+
+  /* ── Options (middle tier) ── */
+  .options-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 10px;
+  }
+
+  .option-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .option-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .option-card.current {
+    border-color: #2563eb;
+    background: linear-gradient(180deg, #eff6ff 0%, #fff 40%);
+  }
+
+  .option-card.recommended {
+    border-color: #059669;
+    background: linear-gradient(180deg, #ecfdf5 0%, #fff 40%);
+  }
+
+  .option-card.alternative {
+    border-color: #d97706;
+    background: linear-gradient(180deg, #fffbeb 0%, #fff 40%);
+  }
+
+  .option-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+
+  .current .option-badge {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .recommended .option-badge {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .alternative .option-badge {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .option-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a1a2e;
+  }
+
+  .option-card .option-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #374151;
+    padding: 6px 0;
+    line-height: 1.4;
+  }
+
+  .feature-list .icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin-top: 1px;
+  }
+
+  .icon.yes { background: #d1fae5; color: #059669; }
+  .icon.no { background: #fee2e2; color: #dc2626; }
+  .icon.partial { background: #fef3c7; color: #d97706; }
+
+  .divider {
+    height: 1px;
+    background: #f3f4f6;
+    margin: 16px 0;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: #9ca3af;
+  }
+
+  .metric-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .metric-value.high { color: #dc2626; }
+  .metric-value.med { color: #d97706; }
+  .metric-value.low { color: #059669; }
+
+  /* ── Bottom tier: Our estate ── */
+  .our-estate {
+    margin-top: 24px;
+  }
+
+  .estate-connectors {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 40px;
+  }
+
+  .estate-connectors::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - 240px);
+    width: 480px;
+    height: 2px;
+    background: #d1d5db;
+  }
+
+  .estate-connectors::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-1px);
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+  }
+
+  .eb-left, .eb-right {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+  }
+  .eb-left { left: calc(50% - 240px); }
+  .eb-right { left: calc(50% + 240px); }
+
+  .estate-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .estate-card {
+    background: #1a1a2e;
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .estate-card .estate-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .estate-card .estate-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .estate-card .estate-detail {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    margin-top: 40px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    border: 2px solid;
+  }
+
+  .legend-dot.blue { border-color: #2563eb; background: #eff6ff; }
+  .legend-dot.green { border-color: #059669; background: #ecfdf5; }
+  .legend-dot.amber { border-color: #d97706; background: #fffbeb; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #9ca3af;
+  }
+
+  /* ── Arrow label between tiers ── */
+  .tier-connector-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #9ca3af;
+    padding: 4px 0;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>AI Customer Support — Strategic Options</h1>
+    <p class="subtitle">Evaluating integration approaches for AI-powered customer concierge</p>
+  </div>
+
+  <!-- Tier 1: AI Models -->
+  <div class="tier">
+    <div class="tier-label">AI Model Providers — Off the Shelf</div>
+    <div class="models-row">
+      <div class="model-card">
+        <div class="model-icon">🟣</div>
+        <div class="name">Anthropic</div>
+        <div class="detail">Claude family</div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">🔵</div>
+        <div class="name">Google</div>
+        <div class="detail">Gemini family</div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">🟢</div>
+        <div class="name">OpenAI</div>
+        <div class="detail">GPT family</div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">🟠</div>
+        <div class="name">Amazon</div>
+        <div class="detail">Bedrock / Titan</div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">⚫</div>
+        <div class="name">IBM</div>
+        <div class="detail">watsonx / Watson</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connector: Models → Options -->
+  <div class="tier-connector-label">available to integrate via</div>
+  <div class="connector-spread">
+    <div class="branch-down left"></div>
+    <div class="branch-down center"></div>
+    <div class="branch-down right"></div>
+  </div>
+
+  <!-- Tier 2: Strategic Options -->
+  <div class="tier">
+    <div class="tier-label">Integration Strategy — Three Options</div>
+    <div class="options-row">
+
+      <!-- Option 1 -->
+      <div class="option-card current">
+        <div class="option-badge">● Option 1 — Current</div>
+        <h3>LivePerson</h3>
+        <p class="option-desc">Continue with existing LP setup. AI via LP's built-in integrations (IBM Watson, AWS Lex). Human agent support already operational.</p>
+        <ul class="feature-list">
+          <li><span class="icon yes">✓</span> Human agent support (live today)</li>
+          <li><span class="icon yes">✓</span> AI bots via Watson / Lex</li>
+          <li><span class="icon no">✗</span> Limited AI model choice</li>
+          <li><span class="icon no">✗</span> No control over AI behaviour</li>
+          <li><span class="icon partial">~</span> Vendor lock-in risk</li>
+          <li><span class="icon yes">✓</span> Minimal build effort</li>
+        </ul>
+        <div class="divider"></div>
+        <div class="metric-row">
+          <span class="metric-label">Build effort</span>
+          <span class="metric-value low">Low</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Flexibility</span>
+          <span class="metric-value high">Low</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Ongoing cost</span>
+          <span class="metric-value high">High (LP licence)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Time to value</span>
+          <span class="metric-value low">Immediate</span>
+        </div>
+      </div>
+
+      <!-- Option 2 -->
+      <div class="option-card recommended">
+        <div class="option-badge">★ Option 2 — In-House</div>
+        <h3>CCC Handler</h3>
+        <p class="option-desc">Build our own Customer Concierge Controller. Plug in any AI provider. Escalate to LP for human agents, or build agent tooling in-house.</p>
+        <ul class="feature-list">
+          <li><span class="icon yes">✓</span> Full AI model flexibility</li>
+          <li><span class="icon yes">✓</span> Custom guardrails &amp; cost control</li>
+          <li><span class="icon yes">✓</span> MCP integrations (HLP, FBR, CPP)</li>
+          <li><span class="icon yes">✓</span> A/B test multiple LLMs</li>
+          <li><span class="icon partial">~</span> Human agents via LP or DIY</li>
+          <li><span class="icon partial">~</span> Higher initial build effort</li>
+        </ul>
+        <div class="divider"></div>
+        <div class="metric-row">
+          <span class="metric-label">Build effort</span>
+          <span class="metric-value med">Medium–High</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Flexibility</span>
+          <span class="metric-value low">High</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Ongoing cost</span>
+          <span class="metric-value low">Low (pay-per-use)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Time to value</span>
+          <span class="metric-value med">~3 months (AI mode)</span>
+        </div>
+      </div>
+
+      <!-- Option 3 -->
+      <div class="option-card alternative">
+        <div class="option-badge">◆ Option 3 — Alternative</div>
+        <h3>New Vendor</h3>
+        <p class="option-desc">Replace LP with a modern platform offering both AI orchestration and human agent support. E.g. Intercom, Zendesk AI, Ada, Kustomer.</p>
+        <ul class="feature-list">
+          <li><span class="icon yes">✓</span> Human agent support included</li>
+          <li><span class="icon yes">✓</span> Built-in AI capabilities</li>
+          <li><span class="icon partial">~</span> Some AI model flexibility</li>
+          <li><span class="icon no">✗</span> Migration effort from LP</li>
+          <li><span class="icon partial">~</span> Vendor lock-in (new vendor)</li>
+          <li><span class="icon partial">~</span> Customisation limits vary</li>
+        </ul>
+        <div class="divider"></div>
+        <div class="metric-row">
+          <span class="metric-label">Build effort</span>
+          <span class="metric-value med">Medium (migration)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Flexibility</span>
+          <span class="metric-value med">Medium</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Ongoing cost</span>
+          <span class="metric-value med">Medium (licence)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Time to value</span>
+          <span class="metric-value med">Depends on vendor</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Connector: Options → Our Estate -->
+  <div class="estate-connectors">
+    <div class="eb-left"></div>
+    <div class="eb-right"></div>
+  </div>
+
+  <!-- Tier 3: Our Products -->
+  <div class="tier our-estate">
+    <div class="tier-label">Our Customer Touchpoints</div>
+    <div class="estate-row">
+      <div class="estate-card">
+        <div class="estate-icon">🌐</div>
+        <div class="estate-name">Help Pages</div>
+        <div class="estate-detail">support.skybet.com</div>
+      </div>
+      <div class="estate-card">
+        <div class="estate-icon">📱</div>
+        <div class="estate-name">Native Apps</div>
+        <div class="estate-detail">iOS / Android (CET)</div>
+      </div>
+      <div class="estate-card">
+        <div class="estate-icon">🎰</div>
+        <div class="estate-name">Product Pages</div>
+        <div class="estate-detail">Sportsbook / Gaming</div>
+      </div>
+      <div class="estate-card">
+        <div class="estate-icon">👤</div>
+        <div class="estate-name">My Account</div>
+        <div class="estate-detail">Self-service area</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot blue"></div>
+      Current state
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot green"></div>
+      Recommended build
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot amber"></div>
+      Alternative to evaluate
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    AI Concierge Strategy — April 2026 · Confidential
+  </div>
+
+</div>
+</body>
+</html>
